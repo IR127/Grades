@@ -6,7 +6,7 @@ namespace Grades
 {
     class GradeBook
     {
-        List<float> grades; //grades is encapsulated
+        private List<float> grades; //grades is encapsulated
 
         public GradeBook()
         {
