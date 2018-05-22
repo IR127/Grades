@@ -12,6 +12,16 @@ namespace Grades.Tests.Types
     public class ReferenceTypeTest
     {
         [TestMethod]
+        public void StringComparison()
+        {
+            string name1 = "Scott";
+            string name2 = "scott";
+
+            bool result = String.Equals(name1, name2, System.StringComparison.InvariantCultureIgnoreCase);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
         public void IntVariablesHoldAValue()
         {
             int x1 = 100;
