@@ -15,15 +15,14 @@ namespace Grades.Tests.Types
         public void ValueTypesPassByValue()
         {
             int x = 46;
-            IncrementNumber(x);
+            IncrementNumber(ref x);
             
-            Assert.AreEqual(46, x);
+            Assert.AreEqual(47, x);
         }
 
-        private void IncrementNumber(int number)
+        private void IncrementNumber(ref int number)
         {
             number += 1;
-            number = 0;
         }
 
         [TestMethod]
@@ -32,11 +31,11 @@ namespace Grades.Tests.Types
             GradeBook book1 = new GradeBook();
             GradeBook book2 = book1;
 
-            GiveBookAName(book2);
-            Assert.AreEqual("A GradeBook", book1.Name);
+            GiveBookAName(ref book2);
+            Assert.AreEqual("A GradeBook", book2.Name);
         }
 
-        private void GiveBookAName(GradeBook book)
+        private void GiveBookAName(ref GradeBook book)
         {
             book.Name = "A GradeBook";
         }
