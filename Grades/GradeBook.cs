@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,10 +10,28 @@ namespace Grades
     public class GradeBook
     {
         private List<float> grades; //grades is encapsulated
-        public string Name;
+        public NameChangedDelegate NameChanged;
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    if (_name != value)
+                    {
+                        NameChanged(_name, value);
+                    }
+
+                    _name = value;
+                }
+            }
+        }
 
         public GradeBook()
         {
+            _name = "Empty";
             grades = new List<float>();
         }
 
