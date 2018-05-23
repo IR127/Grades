@@ -13,8 +13,8 @@ namespace Grades
         static void Main(string[] args)
         {
             //Use a text-to-speech service
-            SpeechSynthesizer synth = new SpeechSynthesizer();
-            synth.Speak("Hello! This is a grade book program");
+            //SpeechSynthesizer synth = new SpeechSynthesizer();
+            //synth.Speak("Hello! This is a grade book program");
 
             GradeBook book = new GradeBook();
             book.AddGrade(91);
@@ -22,11 +22,20 @@ namespace Grades
             book.AddGrade(75);
 
             GradeStatistics stats = book.ComputeStatistics();
-            Console.WriteLine(stats.AverageGrade);
-            Console.WriteLine(stats.HighestGrade);
-            Console.WriteLine(stats.LowestGrade);
+            WriteResult("Average", stats.AverageGrade);
+            WriteResult("Highest", (int)stats.HighestGrade);
+            WriteResult("Lowest", stats.LowestGrade);
 
             Console.ReadLine();
+        }
+        static void WriteResult(string description, int result)
+        {
+            Console.WriteLine(description + ": " + result);
+        }
+
+        static void WriteResult(string description, float result)
+        {
+            Console.WriteLine($"{description}: {result:F2}");
         }
     }
 }
