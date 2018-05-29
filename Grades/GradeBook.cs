@@ -11,21 +11,34 @@ namespace Grades
     public class GradeBook
     {
         private List<float> grades; //grades is encapsulated
+        public event NameChangedDelegate NameChanged;
         private string _name;
         public string Name
         {
             get => _name;
             set
             {
-                if (!String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
-                    _name = value;
+                    throw new ArgumentException("Name cannot be null or empty");
                 }
+
+                if (_name != value)
+                {
+                    NameChangedEventArgs args = new NameChangedEventArgs();
+                    args.ExistingName = _name;
+                    args.NewName = value;
+
+                    NameChanged(this, args);
+                }
+
+                _name = value;
             }
         }
 
         public GradeBook()
         {
+            _name = "Empty";
             grades = new List<float>();
         }
 
@@ -33,7 +46,7 @@ namespace Grades
         {
             for (int i = grades.Count; i > 0; i--)
             {
-                destination.WriteLine(grades[i-1]);
+                destination.WriteLine(grades[i - 1]);
             }
         }
 
