@@ -17,7 +17,16 @@ namespace Grades
             //synth.Speak("Hello! This is a grade book program");
 
             GradeBook book = new GradeBook();
-            book.Name = null;
+
+            try
+            {
+                Console.WriteLine("Enter a name");
+                book.Name = Console.ReadLine();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             book.AddGrade(91);
             book.AddGrade(89.5f);
