@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -12,12 +13,43 @@ namespace Grades
     {
         static void Main(string[] args)
         {
-            //Use a text-to-speech service
-            //SpeechSynthesizer synth = new SpeechSynthesizer();
-            //synth.Speak("Hello! This is a grade book program");
-
             GradeBook book = new GradeBook();
 
+            GetBookName(book);
+            AddGrades(book);
+            SaveGrades(book);
+            WriteResults(book);
+
+            Console.ReadLine();
+        }
+
+        private static void WriteResults(GradeBook book)
+        {
+            GradeStatistics stats = book.ComputeStatistics();
+            Console.WriteLine(book.Name);
+            WriteResult("Average", stats.AverageGrade);
+            WriteResult("Highest", stats.HighestGrade);
+            WriteResult("Lowest", stats.LowestGrade);
+            WriteResult(stats.Description, stats.LetterGrade);
+        }
+
+        private static void SaveGrades(GradeBook book)
+        {
+            using (StreamWriter outputFile = File.CreateText("grades.txt"))
+            {
+                book.WriteGrades(outputFile);
+            }
+        }
+
+        private static void AddGrades(GradeBook book)
+        {
+            book.AddGrade(91);
+            book.AddGrade(89.5f);
+            book.AddGrade(75);
+        }
+
+        private static void GetBookName(GradeBook book)
+        {
             try
             {
                 Console.WriteLine("Enter a name");
@@ -27,20 +59,6 @@ namespace Grades
             {
                 Console.WriteLine(ex.Message);
             }
-
-            book.AddGrade(91);
-            book.AddGrade(89.5f);
-            book.AddGrade(75);
-            book.WriteGrades(Console.Out);
-
-            GradeStatistics stats = book.ComputeStatistics();
-            Console.WriteLine(book.Name);
-            WriteResult("Average", stats.AverageGrade);
-            WriteResult("Highest", stats.HighestGrade);
-            WriteResult("Lowest", stats.LowestGrade);
-            WriteResult(stats.Description, stats.LetterGrade);
-
-            Console.ReadLine();
         }
 
         static void WriteResult(string description, string result)
