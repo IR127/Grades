@@ -10,7 +10,7 @@ namespace Grades
 {
     public class GradeBook
     {
-        private List<float> grades; //grades is encapsulated
+        protected List<float> grades; //grades is encapsulated
         public event NameChangedDelegate NameChanged;
         private string _name;
         public string Name
@@ -57,6 +57,8 @@ namespace Grades
 
         public GradeStatistics ComputeStatistics()
         {
+            Console.WriteLine("GradeBook::ComputeStatistics");
+
             GradeStatistics stats = new GradeStatistics();
 
             float sum = 0;
@@ -68,7 +70,6 @@ namespace Grades
             }
 
             stats.AverageGrade = sum / grades.Count;
-
             return stats;
         }
     }
