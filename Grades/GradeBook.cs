@@ -55,7 +55,7 @@ namespace Grades
             grades.Add(grade);
         }
 
-        public GradeStatistics ComputeStatistics()
+        public virtual GradeStatistics ComputeStatistics()
         {
             Console.WriteLine("GradeBook::ComputeStatistics");
 
